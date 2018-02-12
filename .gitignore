@@ -5,4 +5,4 @@
 node_modules/
 
 # bin
-public/bundle.js
+public/assets/js/bundle.js
