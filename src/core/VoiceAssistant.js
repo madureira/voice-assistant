@@ -1,5 +1,6 @@
 import VoiceRecognition from './VoiceRecognition';
 import VoiceSynthesizer from './VoiceSynthesizer';
+import PageReader from './PageReader';
 import Assistant from './Assistant';
 
 /**
@@ -34,10 +35,13 @@ class VoiceAssistant {
           settings.debug
         );
 
+        const pageReader = new PageReader();
+
         synthesizer.init().then(() => {
           resolve(new Assistant(
             recognition,
             synthesizer,
+            pageReader,
             settings.startCommand,
             settings.soundEffect,
             settings.actions,

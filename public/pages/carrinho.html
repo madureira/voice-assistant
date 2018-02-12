@@ -5,40 +5,41 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Voice Assistant - Página do carrinho</title>
-    <link rel="stylesheet" type="text/css" media="all" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" media="all" href="/assets/css/style.css">
 </head>
 <body>
     <div id="app">
       <header>
-        <h1 id="location">Page: /carrinho</h1>
-        <input id="search" type="text" placeholder="Busca..." />
-        <button class="search-button">OK</button>
+        <h1 id="location">Página: Carrinho</h1>
+        <div class="search-bar">
+          <input id="search" type="text" placeholder="Busca..." />
+          <button class="search-button">OK</button>
+        </div>
       </header>
+      <h2>Itens no carrinho</h2>
       <ul class="products">
         <li>
           <span class="title">Playstation 4</span>
-          <img src="/static/images/ps4.png" alt="imagem do video game playstation 4 fora da caixa" />
-        </li>
-        <li>
-          <span class="title">Nintendo Switch</span>
-          <img src="/static/images/nintendo-switch.jpg" alt="imagem do video game Nintendo Switch fora da caixa" />
-        </li>
-        <li>
-          <span class="title">Xbox One</span>
-          <img src="/static/images/xbox.jpg" alt="imagem do video game Xbox One fora da caixa" />
+          <img src="/assets/images/ps4.png" alt="imagem do video game playstation 4 fora da caixa" />
         </li>
       </ul>
       <div class="command-list">
         <h2>Lista de comandos de voz</h2>
         <div><b>- Ok Luiza:</b> Sempre que quiser dar um comando</div>
         <br/>
-        <div><b>- Carrinho:</b> Para ir para a página do Carrinho</div>
-        <div><b>- Pedidos:</b> Para ir para a página de pedidos</div>
+        <div><b>- Carrinho:</b> Ir para a página do Carrinho</div>
+        <div><b>- Pedidos:</b> Ir para a página de pedidos</div>
+        <div><b>- Inicial:</b> Ir para a página Home</div>
         <div><b>- Pesquisar por:</b> Para pesquisar por produtos</div>
         <div><b>- Onde estou?:</b> Para saber qual página está acessando</div>
         <div><b>- Descreva:</b> Para obter a descrição da página</div>
       </div>
     </div>
-    <script src="/static/js/bundle.js"></script>
+    <script src="/assets/js/bundle.js"></script>
+    <div id="page-description" class="hide">
+      Você está na página do carrinho.
+      No topo dessa página existe um menu de navegação e também uma barra de busca.
+      Se quiser finalizar a compra, diga: Ok Luiza e então diga: Finalizar Compra.
+    </div>
 </body>
 </html>

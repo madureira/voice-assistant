@@ -1,6 +1,3 @@
-import VoiceRecognition from './VoiceRecognition';
-import VoiceSynthesizer from './VoiceSynthesizer';
-
 /**
  * Voice api wrapper.
  *
@@ -8,9 +5,10 @@ import VoiceSynthesizer from './VoiceSynthesizer';
  */
 class Assistant {
 
-  constructor(recognition, synthesizer, startCommand, soundEffect, actions, stopWords, debug = false) {
+  constructor(recognition, synthesizer, pageReader, startCommand, soundEffect, actions, stopWords, debug = false) {
     this._recognition = recognition;
     this._synthesizer = synthesizer;
+    this._pageReader = pageReader;
     this._startCommand = startCommand;
     this._soundEffect = new Audio(soundEffect);
     this._actions = actions;
@@ -54,8 +52,46 @@ class Assistant {
   say(speech, callback = () => {}) {
     this._synthesizer.say(speech).then(() => {
       if (typeof callback === 'function') {
-        window.utterances = []; // work around to BUG in utterances.
+        //window.utterances = []; // work around to BUG in utterances.
         callback();
+      }
+    });
+  }
+
+  /**
+   * Describe what's in the page.
+   * @param {function} Callback to call when Page Reader finish.
+   */
+  describePage(callback = () => {}) {
+    const _this = this;
+    const chunkLength = 120;
+
+    this._pageReader.analyze().then((pageDescription) => {
+      if (pageDescription.length < chunkLength) {
+        _this.say(pageDescription, () => {
+          callback();
+        });
+      } else {
+        const sentences = pageDescription.split(/[\\.!\?]/);
+        let speechCallbacks = [];
+        speechCallbacks.length = sentences.length;
+
+        sentences.map((speech, i) => {
+          if (i === speechCallbacks.length - 1) {
+            if (typeof callback === 'function') {
+              speechCallbacks[i] = () => {
+                _this.say(speech, () => {
+                  callback();
+                });
+              };
+            }
+          } else {
+            speechCallbacks[i] = () => {
+              _this.say(speech, speechCallbacks[i+1]);
+            };
+          }
+        });
+        speechCallbacks[0]();
       }
     });
   }

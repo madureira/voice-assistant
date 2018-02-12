@@ -1,12 +1,13 @@
 import VoiceAssistant from './core/VoiceAssistant';
 
-const searchField = () => {
-  return document.getElementById('search');
+const setSearchFieldValue = (value) => {
+  return document.getElementById('search').value = value;
 };
 
-const locationField = () => {
-  return document.getElementById('location');
+const getLocation = () => {
+  return document.getElementById('location').innerText.replace('/', '').replace('Página:', '');
 };
+
 
 window.addEventListener('load', (event) => {
   VoiceAssistant.start({
@@ -14,7 +15,7 @@ window.addEventListener('load', (event) => {
     volume: 1,
     voiceId: 16,  // 0 or 16 - Portuguese
     startCommand: 'Ok Luiza',
-    soundEffect: '/static/audio/beep.wav',
+    soundEffect: '/assets/audio/beep.wav',
     grammar: [
       'ok',
       'Luiza',
@@ -26,7 +27,10 @@ window.addEventListener('load', (event) => {
       'ir para meus pedidos',
       'carrinho',
       'meu carrinho',
-      'ir para meu carrinho'
+      'ir para meu carrinho',
+      'inicial',
+      'página inicial',
+      'onde estou'
     ],
     stopWords: [
       'o',
@@ -40,7 +44,7 @@ window.addEventListener('load', (event) => {
       'ok',
       'luiza'
     ],
-    actions: ['descreva', 'pesquisar', 'buscar', 'pedido', 'carrinho', 'sacola', 'onde estou'],
+    actions: ['descreva', 'pesquisar', 'buscar', 'pedido', 'carrinho', 'sacola', 'inicial', 'onde estou'],
     debug: true
   })
   .then((assistant) => {
@@ -50,21 +54,24 @@ window.addEventListener('load', (event) => {
 
       if (['pesquisar', 'buscar'].indexOf(action) !== -1 && keywords.length > 0) {
         assistant.say('Pesquisando ' + keywords, () => {
-          searchField().value = keywords;
+          setSearchFieldValue(keywords);
         });
       } else if (['carrinho', 'sacola'].indexOf(action) !== -1) {
         assistant.say('Redirecionando para a página do carrinho', () => {
-          locationField().innerHTML = 'Page: /carrinho';
+          window.location.replace('/carrinho');
         });
       } else if (action === 'pedido') {
         assistant.say('Redirecionando para a página de pedidos', () => {
-          locationField().innerHTML = 'Page: /pedidos';
+          window.location.replace('/pedidos');
+        });
+      } else if (action === 'inicial') {
+        assistant.say('Redirecionando para a página inicial', () => {
+          window.location.replace('/');
         });
       } else if (action === 'onde estou') {
-        const page = locationField().innerText.replace('/', '').replace('Page:', '');
-        assistant.say('Você está na página: ' + page);
+        assistant.say('Você está na página: ' + getLocation());
       } else if (action === 'descreva') {
-        assistant.say('Você está em uma página com 3 produtos');
+        assistant.describePage();
       } else {
         assistant.say('Não entendi o que deseja. Você pode repetir?');
       }

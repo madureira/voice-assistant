@@ -50,6 +50,7 @@ class VoiceSynthesizer {
    */
   say(text) {
     return new Promise((resolve, reject) => {
+      if (!text) resolve();
       window.speechSynthesis.cancel();
 
       this.utterance.text = text;

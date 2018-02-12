@@ -3,14 +3,19 @@ body {
 }
 
 #app {
-  width: 600px;
+  width: 970px;
   height: 600px;
-  margin: 100px auto;
+  margin: 20px auto;
+}
+
+.search-bar {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 #search {
-  margin-top: 50px;
   height: 30px;
+  width: 450px;
   font-size: 120%;
   padding: 5px;
 }
@@ -40,10 +45,23 @@ body {
 }
 
 .command-list {
-  margin-top: 30px;
+  margin: 50px auto 0 auto;
+  width: 530px;
+  border: 2px solid red;
+  padding: 10px;
+  border-radius: 25px;
 }
 
 .command-list div {
   margin: 10px 0;
   font-size: 120%;
+}
+
+.banner {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hide {
+  display: none;
 }
