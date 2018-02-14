@@ -9,11 +9,12 @@ class VoiceSynthesizer {
     return ('speechSynthesis' in window);
   }
 
-  constructor(lang, volume, voiceId, debug = false) {
+  constructor(lang, volume, voiceId, speed, debug = false) {
     window.utterances = [];
     this.lang = lang;
     this.volume = volume;
     this.voiceId = voiceId;
+    this.speed = speed;
     this.voices = window.speechSynthesis.getVoices();
     this.voicesLoaded = false;
     this.debug = debug;
@@ -28,11 +29,14 @@ class VoiceSynthesizer {
       // waiting voices to be loaded..
       window.speechSynthesis.onvoiceschanged = () => {
         this.voices = window.speechSynthesis.getVoices();
+
+        console.log(this.voices);
         this.utterance = new window.SpeechSynthesisUtterance;
         this.utterance.voice = this.voices[this.voiceId];
         this.utterance.voiceURI = 'native';
         this.utterance.volume = this.volume;
         this.utterance.lang = this.lang;
+        this.utterance.rate = this.speed;
 
         if (this.voices.length > 0 && !this.voicesLoaded) {
           this.voicesLoaded = true;

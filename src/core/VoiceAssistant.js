@@ -32,6 +32,7 @@ class VoiceAssistant {
           settings.lang,
           settings.volume,
           settings.voiceId,
+          settings.speed,
           settings.debug
         );
 

@@ -13,7 +13,8 @@ window.addEventListener('load', (event) => {
   VoiceAssistant.start({
     lang: 'pt-BR',
     volume: 1,
-    voiceId: 16,  // 0 or 16 - Portuguese
+    voiceId: 14,  // 0 or 16 - Portuguese
+    speed: 1.5,
     startCommand: 'Ok Luiza',
     soundEffect: '/assets/audio/beep.wav',
     grammar: [
