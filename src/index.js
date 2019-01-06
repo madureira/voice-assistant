@@ -1,6 +1,6 @@
 import VoiceAssistant from './core/VoiceAssistant';
 
-const setSearchFieldValue = (value) => {
+const setSearchFieldValue = value => {
   return document.getElementById('search').value = value;
 };
 
@@ -8,13 +8,11 @@ const getLocation = () => {
   return document.getElementById('location').innerText.replace('/', '').replace('Página:', '');
 };
 
-
 window.addEventListener('load', (event) => {
   VoiceAssistant.start({
     lang: 'pt-BR',
     volume: 1,
-    voiceId: 14,  // 0 or 16 - Portuguese
-    speed: 1.5,
+    speed: 1,
     startCommand: 'Ok Luiza',
     soundEffect: '/assets/audio/beep.wav',
     grammar: [

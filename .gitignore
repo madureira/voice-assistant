@@ -6,3 +6,4 @@ node_modules/
 
 # bin
 public/assets/js/bundle.js
+public/assets/js/voice-assistant.js

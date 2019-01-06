@@ -31,7 +31,6 @@ class VoiceAssistant {
         const synthesizer = new VoiceSynthesizer(
           settings.lang,
           settings.volume,
-          settings.voiceId,
           settings.speed,
           settings.debug
         );

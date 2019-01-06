@@ -10,11 +10,11 @@ class Assistant {
     this._synthesizer = synthesizer;
     this._pageReader = pageReader;
     this._startCommand = startCommand;
-    this._soundEffect = new Audio(soundEffect);
     this._actions = actions;
     this._stopWords = stopWords;
     this._debug = debug;
     this._waitingNextSpeech = false;
+    this._createAudio(soundEffect);
   }
 
   /**
@@ -27,10 +27,19 @@ class Assistant {
       const startCommand = this._startCommand.toLowerCase().trim();
       const isStartCommand = speechText === startCommand;
 
-      if (this._debug) console.log('DEBUG: ', speech.text);
+      if (this._debug) {
+        console.log('DEBUG: ', speech.text);
+      }
 
       if (isStartCommand) {
-        this._soundEffect.play();
+        const playedPromise = this._soundEffect.play();
+        if (playedPromise) {
+          playedPromise.catch(() => {
+            if (this._debug) {
+              console.log('Fail to play audio beep!');
+            }
+          });
+        }
       }
 
       if (this._waitingNextSpeech) {
@@ -94,6 +103,15 @@ class Assistant {
         speechCallbacks[0]();
       }
     });
+  }
+
+  _createAudio(soundEffect) {
+    this._soundEffect = document.createElement('audio');
+    this._soundEffect.src = soundEffect;
+    this._soundEffect.style.display = 'none';
+    this._soundEffect.autoplay = false;
+    this._soundEffect.preload = 'auto';
+    document.body.appendChild(this._soundEffect);
   }
 
   _extractKeyword(speech) {

@@ -9,11 +9,10 @@ class VoiceSynthesizer {
     return ('speechSynthesis' in window);
   }
 
-  constructor(lang, volume, voiceId, speed, debug = false) {
+  constructor(lang, volume, speed, debug = false) {
     window.utterances = [];
     this.lang = lang;
     this.volume = volume;
-    this.voiceId = voiceId;
     this.speed = speed;
     this.voices = window.speechSynthesis.getVoices();
     this.voicesLoaded = false;
@@ -29,10 +28,16 @@ class VoiceSynthesizer {
       // waiting voices to be loaded..
       window.speechSynthesis.onvoiceschanged = () => {
         this.voices = window.speechSynthesis.getVoices();
+        let voiceId = 0;
 
-        console.log(this.voices);
+        this.voices.forEach((voice, index) => {
+          if (voice.lang === this.lang) {
+            voiceId = index;
+          }
+        });
+
         this.utterance = new window.SpeechSynthesisUtterance;
-        this.utterance.voice = this.voices[this.voiceId];
+        this.utterance.voice = this.voices[voiceId];
         this.utterance.voiceURI = 'native';
         this.utterance.volume = this.volume;
         this.utterance.lang = this.lang;
@@ -59,12 +64,16 @@ class VoiceSynthesizer {
 
       this.utterance.text = text;
 
-      if (this.debug) console.log('DEBUG: Start speak -> ', text);
+      if (this.debug) {
+        console.log('DEBUG: Start speak -> ', text);
+      }
 
       window.utterances.push(this.utterance);  // work around to BUG in utterances.
 
       this.utterance.onend = () => {
-        console.log('finished');
+        if (this.debug) {
+          console.log('finished');
+        }
         resolve();
       };
 
