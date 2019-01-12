@@ -1,56 +1,103 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Voice Assistant - Página home</title>
+    <title>Voice Assistant</title>
     <link rel="stylesheet" type="text/css" media="all" href="/assets/css/style.css">
+    <link href="/assets/css/monokai.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div id="app">
-      <header>
-        <h1 id="location">Página: Inicial</h1>
-        <div class="search-bar">
-          <input id="search" type="text" placeholder="Busca..." />
-          <button class="search-button">OK</button>
-        </div>
-      </header>
-      <div class="banner">
-        <img src="/assets/images/banner.png"/>
-      </div>
-      <ul class="products">
-        <li>
-          <span class="title">Playstation 4</span>
-          <img src="/assets/images/ps4.png" alt="imagem do video game playstation 4 fora da caixa" />
-        </li>
-        <li>
-          <span class="title">Nintendo Switch</span>
-          <img src="/assets/images/nintendo-switch.jpg" alt="imagem do video game Nintendo Switch fora da caixa" />
-        </li>
-        <li>
-          <span class="title">Xbox One</span>
-          <img src="/assets/images/xbox.jpg" alt="imagem do video game Xbox One fora da caixa" />
-        </li>
-      </ul>
-      <div class="command-list">
-        <h2>Lista de comandos de voz</h2>
-        <div><b>- Ok Luiza:</b> Sempre que quiser dar um comando</div>
-        <br/>
-        <div><b>- Carrinho:</b> Ir para a página do Carrinho</div>
-        <div><b>- Pedidos:</b> Ir para a página de pedidos</div>
-        <div><b>- Inicial:</b> Ir para a página Home</div>
-        <div><b>- Pesquisar por:</b> Para pesquisar por produtos</div>
-        <div><b>- Onde estou?:</b> Para saber qual página está acessando</div>
-        <div><b>- Descreva:</b> Para obter a descrição da página</div>
-      </div>
-    </div>
-    <div id="page-description" class="hide">
-      Você está na página inicial.
-      No topo dessa página existe um menu de navegação e também uma barra de busca.
-      Abaixo do menu existe um banner da promoção de carnaval com informações sobre as ofertas.
-      Logo após o banner existe um carrousel de produtos contendo 3 produtos, sendo eles: Playstation 4, Nintendo Switch e XboxOne.
-    </div>
+      <main class="container">
+        <header>
+          <h1>Voice Assistant</h1>
+          <h2>Make some questions to Voice Assistant, see the examples below.</h2>
+        </header>
+        <section class="talkin">
+          <article>
+              <div class="bubble">Say</div>
+              <h3>Hello!</h3>
+          </article>
+          <article>
+              <div class="bubble">Say</div>
+              <h3>How are you?</h3>
+          </article>
+          <article>
+              <div class="bubble">Say</div>
+              <h3>Are you a robot?</h3>
+          </article>
+          <article>
+              <div class="bubble">Say</div>
+              <h3>Do you love me?</h3>
+          </article>
+        </section>
+        <section class="code">
+          <header>
+            <h2>How it works?</h2>
+          </header>
+          <div>
+            <span class="language">Html</span>
+            <pre>
+              <code data-language="html">
+&lt;script src="voice-assistant.js"&gt;&lt;/script&gt;
+              </code>
+            </pre>
+            <span class="language">javascript</span>
+            <pre>
+              <code data-language="javascript">
+window.addEventListener('load', event => {
+  if (!VoiceAssistant.isSupported()) {
+    console.log('Your browser do not supports voice assistant!');
+    return;
+  }
+
+  const config = {
+    lang: 'en-US',
+    volume: 1,
+    speed: 0.8,
+    grammar: [
+      'How are you',
+      'How are you doing',
+      'Are you a robot',
+      'Do you love me'
+    ]
+  };
+
+  const assistant = new VoiceAssistant(config);
+
+  assistant.listen(['Hello'], () => {
+    assistant.say('Hi, I am your voice assistant, let\'s talk?');
+  });
+
+  assistant.listen(['How are you?', 'How are you doing?'], () => {
+    assistant.say('I am pretty good, thanks!', () => {
+      assistant.say('How about you?');
+    });
+  });
+
+  assistant.listen(['Are you a robot?'], () => {
+    assistant.say('Course not, I am a human, trust-me!');
+  });
+
+  assistant.listen(['Do you love me?'], () => {
+    assistant.say('Oh, come on, seriously?');
+  });
+});
+              </code>
+            </pre>
+          </div>
+        </section>
+      </main>
+    </app>
+    <a href="https://github.com/madureira/voice-assistant">
+      <img style="position: absolute; top: 0; right: 0; border: 0;" src="/assets/images/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">
+    </a>
     <script src="/assets/js/voice-assistant.js"></script>
+    <script src="/assets/js/rainbow.min.js"></script>
+    <script src="/assets/js/generic.js"></script>
+    <script src="/assets/js/html.js"></script>
+    <script src="/assets/js/javascript.js"></script>
 </body>
 </html>

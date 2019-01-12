@@ -32,13 +32,19 @@ class VoiceAssistant {
         console.log(speechText);
 
         if (!isStartCommand) {
-          this.callbackListeners.forEach(listener => {
-            listener.actions.forEach(action => {
+          for (let i = 0; i < this.callbackListeners.length; i++) {
+            let match = false;
+            const listener = this.callbackListeners[i];
+            for (let j = 0; j < listener.actions.length; j++) {
+              const action = listener.actions[j];
               if (speechText.includes(action)) {
                 listener.callback();
+                match = true;
+                break;
               }
-            });
-          });
+            }
+            if (match) break;
+          }
         }
       });
     }

@@ -13,35 +13,30 @@ window.addEventListener('load', event => {
     mainCommand: 'show',
     soundEffect: '/assets/audio/beep.wav',
     grammar: [
-      'how',
-      'are',
-      'you',
-      'doing',
-      'how are',
-      'how are you',
-      'how are you doing',
-      'robot'
+      'How are you',
+      'How are you doing',
+      'Are you a robot',
+      'Do you love me'
     ]
   };
 
   const assistant = new VoiceAssistant(config);
 
+  assistant.listen(['Hello'], () => {
+    assistant.say('Hi, I am your voice assistant, let\'s talk?');
+  });
+
   assistant.listen(['How are you?', 'How are you doing?'], () => {
-    assistant.say('I am fine, thanks!');
+    assistant.say('I am pretty good, thanks!', () => {
+      assistant.say('How about you?');
+    });
   });
 
   assistant.listen(['Are you a robot?'], () => {
-    assistant.say('Course not, I\'m a human, trust-me!');
+    assistant.say('Course not, I am a human, trust-me!');
   });
 
   assistant.listen(['Do you love me?'], () => {
     assistant.say('Oh, come on, seriously?');
   });
-
-  assistant.listen(['What?'], () => {
-    assistant.say('Say what again. SAY WHAT again! And I dare you, I double dare you motherfucker!', () => {
-      assistant.say('Say WHAT one more goddamn time!');
-    });
-  });
-
 });

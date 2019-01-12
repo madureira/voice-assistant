@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const path = require('path');
 const config = require('./webpack.config');
 const app = express();
+
+config.mode = 'development';
 const compiler = webpack(config);
 
 const instance = require('webpack-dev-middleware')(compiler, {
