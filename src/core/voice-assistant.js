@@ -8,7 +8,7 @@ class VoiceAssistant {
   }
 
   constructor(config) {
-    this._mainCommand = config.mainCommand.toLowerCase().trim();
+    this._mainCommand =  config.mainCommand ? config.mainCommand.toLowerCase().trim() : null;
     this._voiceSynthesizer = new VoiceSynthesizer(config.lang, config.volume, config.speed);
     this._voiceRecognizer = new VoiceRecognizer(config.lang, config.grammar);
     this.callbackListeners = [];

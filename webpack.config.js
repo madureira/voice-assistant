@@ -5,6 +5,6 @@ module.exports = {
   output:{
     path: path.resolve(__dirname, 'public/assets/js'),
     publicPath: '/public/',
-    filename: 'voice-assistant.js'
+    filename: 'voice-assistant.min.js'
   }
 };
