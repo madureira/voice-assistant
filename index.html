@@ -47,17 +47,13 @@
             <span class="language">javascript</span>
             <pre>
               <code data-language="javascript">
-window.addEventListener('load', event => {
-  if (!VoiceAssistant.isSupported()) {
-    console.log('Your browser do not supports voice assistant!');
-    return;
-  }
-
+if (VoiceAssistant.isSupported()) {
   const config = {
     lang: 'en-US',
     volume: 1,
     speed: 0.8,
     grammar: [
+      'Hello',
       'How are you',
       'How are you doing',
       'Are you a robot',
@@ -84,7 +80,9 @@ window.addEventListener('load', event => {
   assistant.listen(['Do you love me?'], () => {
     assistant.say('Oh, come on, seriously?');
   });
-});
+} else {
+  console.log('Your browser do not supports voice assistant!');
+}
               </code>
             </pre>
           </div>
@@ -94,10 +92,48 @@ window.addEventListener('load', event => {
     <a href="https://github.com/madureira/voice-assistant">
       <img style="position: absolute; top: 0; right: 0; border: 0;" src="/voice-assistant/assets/images/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">
     </a>
-    <script src="/voice-assistant/assets/js/voice-assistant.min.js"></script>
+    <script src="/voice-assistant/assets/js/voice-assistant.js"></script>
     <script src="/voice-assistant/assets/js/rainbow.min.js"></script>
     <script src="/voice-assistant/assets/js/generic.js"></script>
     <script src="/voice-assistant/assets/js/html.js"></script>
     <script src="/voice-assistant/assets/js/javascript.js"></script>
+    <script>
+      if (VoiceAssistant.isSupported()) {
+        const config = {
+          lang: 'en-US',
+          volume: 1,
+          speed: 0.8,
+          grammar: [
+            'Hello',
+            'How are you',
+            'How are you doing',
+            'Are you a robot',
+            'Do you love me'
+          ]
+        };
+
+        const assistant = new VoiceAssistant(config);
+
+        assistant.listen(['Hello'], () => {
+          assistant.say('Hi, I am your voice assistant, let\'s talk?');
+        });
+
+        assistant.listen(['How are you?', 'How are you doing?'], () => {
+          assistant.say('I am pretty good, thanks!', () => {
+            assistant.say('How about you?');
+          });
+        });
+
+        assistant.listen(['Are you a robot?'], () => {
+          assistant.say('Course not, I am a human, trust-me!');
+        });
+
+        assistant.listen(['Do you love me?'], () => {
+          assistant.say('Oh, come on, seriously?');
+        });
+      } else {
+        console.log('Your browser do not supports voice assistant!');
+      }
+    </script>
 </body>
 </html>
